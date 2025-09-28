@@ -1,0 +1,31 @@
+name: Python Tests CI
+
+on:
+  push:
+    branches: [ develop, feature/* ]
+  pull_request:
+    branches: [ develop, main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install UV package manager
+        run: pip install uv
+
+      - name: Install dependencies
+        working-directory: ./algorithms
+        run: uv sync --dev
+
+      - name: Run tests
+        working-directory: ./algorithms
+        run: uv run pytest
