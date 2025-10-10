@@ -19,6 +19,14 @@ jobs:
         with:
           python-version: '3.13'
 
+      - name: Upgrade CMake
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://github.com/Kitware/CMake/releases/download/v3.27.9/cmake-3.27.9-linux-x86_64.sh
+          sudo sh cmake-3.27.9-linux-x86_64.sh --skip-license --prefix=/usr/local
+          cmake --version
+
       - name: Install raylib dependencies
         run: |
           sudo apt-get update
@@ -42,8 +50,9 @@ jobs:
       - name: Link raylib shared library for raylibpy
         working-directory: ./algorithms
         run: |
-          python -c "import site; import os; p=site.getsitepackages()[0]+'/raylibpy/bin/64bit'; os.makedirs(p, exist_ok=True); os.system(f'ln -sf /usr/local/lib/libraylib.so.5.5.0 {p}/libraylib.so.5.5.0')"
-
+          source .venv/bin/activate
+          python -c "import sysconfig, os; p=sysconfig.get_path('purelib')+'/raylibpy/bin/64bit'; os.makedirs(p, exist_ok=True); os.system(f'ln -sf /usr/local/lib/libraylib.so.5.5.0 {p}/libraylib.so.5.5.0')"
+          
       - name: Run tests
         working-directory: ./algorithms
         run: |
