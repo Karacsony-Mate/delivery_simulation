@@ -17,15 +17,33 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.13'
+
+      - name: Install raylib dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential git cmake libgl1-mesa-dev libx11-dev libxrandr-dev libxi-dev libxinerama-dev libxcursor-dev
+          git clone https://github.com/raysan5/raylib.git /tmp/raylib
+          cd /tmp/raylib
+          mkdir build && cd build
+          cmake -DBUILD_SHARED_LIBS=ON ..
+          make
+          sudo make install
+          sudo ldconfig
 
       - name: Install UV package manager
         run: pip install uv
 
       - name: Install dependencies
         working-directory: ./algorithms
-        run: uv sync --dev
+        run: |
+          uv sync --dev
+          mkdir -p .venv/lib/python3.12/site-packages/raylibpy/bin/64bit/
+          ln -s /usr/local/lib/libraylib.so.5.5.0 .venv/lib/python3.12/site-packages/raylibpy/bin/64bit/libraylib.so.5.5.0
 
       - name: Run tests
         working-directory: ./algorithms
-        run: uv run pytest
+        run: |
+          export DISPLAY=:99
+          Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+          uv run pytest
