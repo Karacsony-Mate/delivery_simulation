@@ -1,11 +1,9 @@
 [project]
-name = "algorithms"
+name = "python-pathfind-uv"
 version = "0.1.0"
 description = "Add your description here"
-requires-python = ">=3.12"
-dependencies = []
-
-[dependency-groups]
-dev = [
-    "pytest>=8.4.2",
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "raylib-py>=5.5.0",
 ]
