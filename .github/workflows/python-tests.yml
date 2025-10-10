@@ -38,8 +38,11 @@ jobs:
         working-directory: ./algorithms
         run: |
           uv sync --dev
-          mkdir -p .venv/lib/python3.12/site-packages/raylibpy/bin/64bit/
-          ln -s /usr/local/lib/libraylib.so.5.5.0 .venv/lib/python3.12/site-packages/raylibpy/bin/64bit/libraylib.so.5.5.0
+
+      - name: Link raylib shared library for raylibpy
+        working-directory: ./algorithms
+        run: |
+          python -c "import site; import os; p=site.getsitepackages()[0]+'/raylibpy/bin/64bit'; os.makedirs(p, exist_ok=True); os.system(f'ln -sf /usr/local/lib/libraylib.so.5.5.0 {p}/libraylib.so.5.5.0')"
 
       - name: Run tests
         working-directory: ./algorithms
