@@ -6,6 +6,7 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/road/protos/Road.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/road/protos/Crossroad.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/road/protos/RoadLine.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/humans/pedestrian/protos/Pedestrian.proto"
 
 WorldInfo {
   info [
@@ -18,7 +19,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation -0.3826485588778783 0.27886201892261914 0.8808042091129467 2.00028188114591
-  position 1098.3581279010525 -1088.3678047165567 1177.3197186600264
+  position 645.866011092806 -104.7257752537236 17.927259832379104
   near 3
 }
 TexturedBackground {
@@ -813,6 +814,9 @@ Road {
     "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/road/protos/textures/road_line_dashed.png"
   ]
   splineSubdivision 0
+}
+Robot {
+  supervisor TRUE
 }
 Road {
   translation 760.269633 -54.123785 0.01
@@ -2051,4 +2055,7 @@ Road {
     "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/road/protos/textures/road_line_triangle.png"
   ]
   splineSubdivision 0
+}
+Pedestrian {
+  translation 637.794 -89.5296 1.34
 }
