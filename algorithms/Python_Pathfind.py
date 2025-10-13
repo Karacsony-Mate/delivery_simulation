@@ -38,14 +38,6 @@ def hDistance(nodeA, nodeB):
 
     return h
 
-
-for x in range(5):
-    # Par hardcodeolt "fal" - TODO Fajlbol valo palya betoltese / akarhogy mashogyan csak ne hardcode
-    grid[5 + x][10].walkable = False
-    grid[10][5 + x].walkable = False
-    grid[7 + x][7 + x].walkable = False
-
-
 def retracePath(
     startNode, endNode
 ):  # A megtalalt ut visszakovetese es eltarolasa hogy kilehessen majd rajzolni
@@ -143,7 +135,7 @@ def aStar(start, end):  # Fo algoritmus
 
 # Fo program felepitese
 def main():
-    init_window(800, 460, "Pathfind")  # Ablak inicializacio
+    init_window(800, 800, "Pathfind")  # Ablak inicializacio
     set_target_fps(60)
 
     start = None
@@ -151,27 +143,37 @@ def main():
     path = []
 
     while not window_should_close():  # Fo ciklus
+
+        if is_mouse_button_pressed(MOUSE_RIGHT_BUTTON):
+            mouseX = get_mouse_x()
+            mouseY = get_mouse_y()
+
+            gridPos = grid[math.floor(mouseY / 40)][math.floor(mouseX / 40)]
+            
+            gridPos.walkable = not gridPos.walkable
+
         if is_mouse_button_pressed(
             MOUSE_LEFT_BUTTON
         ):  # Bal klikkel lehet lehejezni a kezdo es vegpontot
             mouseX = get_mouse_x()
             mouseY = get_mouse_y()
-
-            if start == None:
-                start = grid[math.floor(mouseY / 23)][
-                    math.floor(mouseX / 40)
-                ]  # Sketchy megoldas de amig a negyzethalo es az ablakfelbontasanak aranyos ertekeket adunk meg, addig pontosak lesznek a kapott indexek
-            else:
-                end = grid[math.floor(mouseY / 23)][math.floor(mouseX / 40)]
+            
+            gridPos = grid[math.floor(mouseY / 40)][math.floor(mouseX / 40)] 
+            
+            if (start == None and gridPos.walkable ):
+                start = gridPos  # Sketchy megoldas de amig a negyzethalo es az ablakfelbontasanak aranyos ertekeket adunk meg, addig pontosak lesznek a kapott indexek
+            
+            elif(end == None and gridPos.walkable):
+                end = gridPos
 
         if (
             start != None and end != None
         ):  # Ha ervenyes a ket megadott pont meghivjuk az aStar() fuggvenyt
-            path = aStar(start, end)
-            start = None
-            end = None
-
+                path = aStar(start, end)
+                start = None
+                end = None
         # print(len(path) - 2) # ut hossza - a kezdo es vegpont
+
 
         # Rajzolas
         begin_drawing()
@@ -180,27 +182,27 @@ def main():
         for row in grid:
             for node in row:
                 if not node.walkable:
-                    draw_rectangle(node.x * 40, node.y * 23, 40, 23, BLACK)  # Falak
+                    draw_rectangle(node.x * 40, node.y * 40, 40, 40, BLACK)  # Falak
                 else:
                     draw_rectangle_lines(
-                        node.x * 40, node.y * 23, 40, 23, BLACK
+                        node.x * 40, node.y * 40, 40, 40, BLACK
                     )  # "Negyzethalo" negyzetenket rajzoljuk ki
 
         for node in path:
             draw_rectangle(
-                node.x * 40, node.y * 23, 40, 23, GREEN
+                node.x * 40, node.y * 40, 40, 40, GREEN
             )  # Legrovidebb ut rajzolasa
 
         if len(path) > 0:
-            draw_rectangle(path[0].x * 40, path[0].y * 23, 40, 23, BLUE)  # Kezdopont
-            draw_rectangle(path[-1].x * 40, path[-1].y * 23, 40, 23, RED)  # Celpont
+            draw_rectangle(path[0].x * 40, path[0].y * 40, 40, 40, BLUE)  # Kezdopont
+            draw_rectangle(path[-1].x * 40, path[-1].y * 40, 40, 40, RED)  # Celpont
 
         # Csak azert hogy kattintas utan lassuk a kijelolt pontokat (De meg nem adtuk meg mind a kettot)
         if start != None:
-            draw_rectangle(start.x * 40, start.y * 23, 40, 23, BLUE)
+            draw_rectangle(start.x * 40, start.y * 40, 40, 40, BLUE)
 
         if end != None:
-            draw_rectangle(end.x * 40, end.y * 23, 40, 23, RED)
+            draw_rectangle(end.x * 40, end.y * 40, 40, 40, RED)
 
         end_drawing()
 
