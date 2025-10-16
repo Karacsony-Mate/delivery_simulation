@@ -2,10 +2,14 @@
 name = "algorithms"
 version = "0.1.0"
 description = "Add your description here"
+readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
-
-[dependency-groups]
-dev = [
+dependencies = [
     "pytest>=8.4.2",
+    "raylib-py>=5.5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
 ]
