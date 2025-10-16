@@ -1,0 +1,55 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/tesla/TeslaModel3.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/containers/protos/WoodenBox.proto"
+EXTERNPROTO "../protos/DeliveryMarker.proto"
+
+WorldInfo {
+  ERP 0.6
+  basicTimeStep 16
+  contactProperties [
+    ContactProperties {
+      softERP 0.6
+      softCFM 1e-05
+    }
+  ]
+}
+Viewpoint {
+  orientation -0.08823281245570955 0.21140563839380122 0.9734077392652398 0.8101417224340542
+  position -41.32855937046318 -42.07219897493815 11.073856937226918
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 30 30
+  wallHeight 0.5
+}
+Robot {
+  name "Supervisor"
+  controller "supervisor"
+  supervisor TRUE
+}
+DEF TESLA TeslaModel3 {
+  translation -10 5 0.5
+  rotation 0 0 1 -1.5707953071795862
+  controller "keyboard_drive"
+  sensorsSlotCenter [
+    Display {
+      width 300
+      height 80
+    }
+  ]
+}
+DEF PACKAGE WoodenBox {
+  translation -9.5 -9.5 0.2
+  size 0.4 0.4 0.4
+}
+DEF MARKER DeliveryMarker {
+  translation 10 -8.5 0
+  color 0 1 0
+}
