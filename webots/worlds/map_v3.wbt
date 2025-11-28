@@ -3943,7 +3943,7 @@ Robot {
     }
   ]
   name "Supervisor"
-  controller "supervisor"
+  controller "supervisor_pathfinding"
   supervisor TRUE
 }
 Robot {
