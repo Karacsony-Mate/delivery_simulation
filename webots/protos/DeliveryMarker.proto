@@ -1,0 +1,25 @@
+#VRML_SIM R2025a utf8
+PROTO DeliveryMarker [
+  field SFVec3f translation 0 0.01 0
+  field SFColor color 1 0 0
+]
+{
+  Transform {
+    translation IS translation
+    children [
+      Shape {
+        appearance Appearance {
+          material Material {
+            diffuseColor IS color
+            emissiveColor IS color
+            transparency 0.3
+          }
+        }
+        geometry Cylinder {
+          height 0.02
+          radius 0.7
+        }
+      }
+    ]
+  }
+}
