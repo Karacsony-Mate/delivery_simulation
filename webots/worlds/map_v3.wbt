@@ -9,19 +9,32 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/buildings/protos/SimpleBuilding.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/trees/protos/SimpleTree.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/trees/protos/Forest.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/bmw/BmwX5.proto"
+EXTERNPROTO "../protos/DeliveryMarker.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/containers/protos/WoodenBox.proto"
 
 WorldInfo {
   info [
     "World generated using the Open Street Map to Webots importer"
     "Author: David Mansolino <david.mansolino@epfl.ch>"
   ]
+  ERP 0.6
+  basicTimeStep 16
   gpsCoordinateSystem "WGS84"
   gpsReference 47.82424754947 22.390381607244997 0
   lineScale 6
+  contactProperties [
+    ContactProperties {
+      coulombFriction [
+        4
+      ]
+      softCFM 1e-05
+    }
+  ]
 }
-Viewpoint {
-  orientation -0.5773502691896258 0.5773502691896258 0.5773502691896258 2.0944
-  position -52.729040553220116 -6.264546765237238 1439.0186439387044
+DEF MAIN_VIEWPOINT Viewpoint {
+  orientation 0.19550755960516802 0.1881371377591353 -0.9624869929162844 1.6473695011586111
+  position -369.71984474232613 311.58138782723677 102.18828154014356
   near 3
 }
 TexturedBackground {
@@ -3921,4 +3934,39 @@ DEF water Pose {
       castShadows FALSE
     }
   ]
+}
+Robot {
+  children [
+    Emitter {
+      name "path_emitter"
+      channel 1
+    }
+  ]
+  name "Supervisor"
+  controller "supervisor"
+  supervisor TRUE
+}
+Robot {
+  name "Director"
+  controller "camera_director"
+  supervisor TRUE
+}
+DEF BMW BmwX5 {
+  translation -440.479 156.556 0.4
+  rotation 0 0 1 -1.047195307179586
+  name "BMW"
+  controller "car_controller"
+  sensorsSlotCenter [
+    Receiver {
+      name "path_receiver"
+      channel 1
+    }
+  ]
+}
+DEF PACKAGE WoodenBox {
+  translation -431.724 141.864 0.4
+  size 0.5 0.5 0.5
+}
+DEF MARKER DeliveryMarker {
+  translation -303.99 -141.68 0.01
 }
